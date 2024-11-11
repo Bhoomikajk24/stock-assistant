@@ -1,14 +1,3 @@
-
-pip install openai
-
-pip install pandas
-
-pip install matplotlib
-
-pip install yfinance
-
-pip install streamlit
-
 import json
 import openai as openai
 import pandas as pd
