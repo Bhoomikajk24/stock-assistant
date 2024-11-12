@@ -87,6 +87,12 @@ def predict_with_ai(df):
     X = df[["Date_ordinal"]].values
     y = df["close"].values
 
+    # Moving Average model (simple model to predict next day based on average of past n days)
+    df["Moving_Avg"] = df["close"].rolling(window=5).mean()
+    y_pred_ma = df["Moving_Avg"].iloc[-1]  # Next day's price prediction based on the moving average
+
+    return y_pred_lr, y_pred_ma, y_test, y
+    
     # Split data
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
 
@@ -94,12 +100,6 @@ def predict_with_ai(df):
     lr_model = LinearRegression()
     lr_model.fit(X_train, y_train)
     y_pred_lr = lr_model.predict(X_test)
-    
-    # Moving Average model (simple model to predict next day based on average of past n days)
-    df["Moving_Avg"] = df["close"].rolling(window=5).mean()
-    y_pred_ma = df["Moving_Avg"].iloc[-1]  # Next day's price prediction based on the moving average
-
-    return y_pred_lr, y_pred_ma, y_test, y
 
 # Streamlit UI
 st.title("Stock Price App with AI Predictions")
