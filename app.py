@@ -79,13 +79,6 @@ def get_historical_data(ticker):
     except KeyError:
         return None
 
- # Moving Average model (simple model to predict next day based on average of past n days)
-    df["Moving_Avg"] = df["close"].rolling(window=5).mean()
-    y_pred_ma = df["Moving_Avg"].iloc[-1]  # Next day's price prediction based on the moving average
-
-    return y_pred_lr, y_pred_ma, y_test, y
-
-
 # Simple AI models for stock prediction
 def predict_with_ai(df):
     # Prepare data
@@ -102,7 +95,12 @@ def predict_with_ai(df):
     lr_model.fit(X_train, y_train)
     y_pred_lr = lr_model.predict(X_test)
     
-   
+ # Moving Average model (simple model to predict next day based on average of past n days)
+    df["Moving_Avg"] = df["close"].rolling(window=5).mean()
+    y_pred_ma = df["Moving_Avg"].iloc[-1]  # Next day's price prediction based on the moving average
+
+    return y_pred_lr, y_pred_ma, y_test, y
+
 # Streamlit UI
 st.title("Stock Price App with AI Predictions")
 user_input = st.text_input("Ask about a stock...")
