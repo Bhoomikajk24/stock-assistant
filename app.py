@@ -79,7 +79,7 @@ def get_historical_data(ticker):
     except KeyError:
         return None
 
-# Simple AI models for stock prediction
+# AI models for stock prediction
 def predict_with_ai(df):
     # Prepare data
     df["Date"] = pd.to_datetime(df.index)
